@@ -41,14 +41,14 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
         return findConnectedGroups(image, seen, groups);
     }
     public List<Group> findConnectedGroups(int[][] image, boolean[][] seen, List<Group> groups) {
+        int groupSize = 0;
         int xsum = 0;
         int ysum = 0;
         for (int r = 0; r < image.length; r++) {
             for (int c = 0; c < image[0].length; c++) {
                 if (image[r][c]==1) {
-                    List<int[]> pixels = new ArrayList<>();
-                    List<int[]> pixelsLocations = dfs(image, seen, pixels, r, c);
-                    for (int[] location : pixelsLocations) {
+                    List<int[]> pixels = dfs(image, seen, r, c);
+                    for (int[] location : pixels) {
                         xsum += location[0];
                         ysum += location[1];
                     }
@@ -59,16 +59,21 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
         return groups;
     }
     
+    public static List<int[]> dfs(int[][] image, boolean[][] seen, int r, int c) {
+        List<int[]> pixels = new ArrayList<>();
+        return dfs(image, seen, pixels, r, c);
+    }
     public static List<int[]> dfs(int[][] image, boolean[][] seen, List<int[]> pixels, int r, int c) {
         int[][] directions = {{-1,0},{1,0},{0,-1},{0,1}};
-        if (seen[r][c]) return null;
+        if (seen[r][c]) return pixels;
         seen[r][c] = true;
         pixels.add(new int[]{r,c});
         for (int[] dir : directions) {
             if (r+dir[0]<image.length&&
                 r+dir[0]>=0&&
                 c+dir[1]<image[0].length&&
-                c+dir[1]>=0) return dfs(image, seen, pixels, r+dir[0], c+dir[1]);
+                c+dir[1]>=0&&
+                !seen[r][c]) dfs(image, seen, pixels, r+dir[0], c+dir[1]);
         }
         return pixels;
     }

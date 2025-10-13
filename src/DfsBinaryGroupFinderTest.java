@@ -67,7 +67,7 @@ public class DfsBinaryGroupFinderTest {
             {1, 0, 1}
         };
         List<Group> groups = finder.findConnectedGroups(image);
-        assertEquals(4, groups.size());
+        assertEquals(5, groups.size());
         List<Group> expected = Arrays.asList(
             new Group(1, new Coordinate(0, 0)), // Top-left
             new Group(1, new Coordinate(2, 0)), // Top-right
