@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class DfsBinaryGroupFinder implements BinaryGroupFinder {
@@ -34,27 +35,34 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
     @Override
     public List<Group> findConnectedGroups(int[][] image) {
         if (image==null) throw new NullPointerException();
-        int[][] seen = new int[image.length][image[0].length];
-        return findConnectedGroups(image, seen);
+        boolean[][] seen = new boolean[image.length][image[0].length];
+        List<Group> groups = new ArrayList<>();
+        return findConnectedGroups(image, seen, groups);
     }
-    public List<Group> findConnectedGroups(int[][] image, int[][] seen) {
-        int ROW, COL = 0;
+    public List<Group> findConnectedGroups(int[][] image, boolean[][] seen, List<Group> groups) {
         for (int r = 0; r < image.length; r++) {
             for (int c = 0; c < image[0].length; c++) {
                 if (image[r][c]==1) {
-                    ROW = r;
-                    COL = c;
-                    
+                    List<int[]> pixels = dfs(image, seen, r, c);
+                }
+                for (int[] location : pixelLocations) {
+                    xsum += location[0];
+                    ysum += location[1];
                 }
             }
         }
-        return null;
+        return List.of();
     }
-    public static List<int[]> validNeighbours(int[][] image, int[][] seen, int r, int c) {
+    
+    public static List<int[]> dfs(int[][] image, boolean[][] seen, int r, int c) {
+        List<int[]> pixels = new ArrayList<>();
         int[][] directions = {{-1,0},{1,0},{0,-1},{0,1}};
+        if (seen[r][c]) return null;
+        seen[r][c] = true;
+        pixels.add(new int[]{r,c});
         for (int[] dir : directions) {
-
+            return dfs(image, seen, r+dir[0], c+dir[1]);
         }
-        return null;
+        return pixels;
     }
 }
