@@ -33,7 +33,28 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
     */
     @Override
     public List<Group> findConnectedGroups(int[][] image) {
+        if (image==null) throw new NullPointerException();
+        int[][] seen = new int[image.length][image[0].length];
+        return findConnectedGroups(image, seen);
+    }
+    public List<Group> findConnectedGroups(int[][] image, int[][] seen) {
+        int ROW, COL = 0;
+        for (int r = 0; r < image.length; r++) {
+            for (int c = 0; c < image[0].length; c++) {
+                if (image[r][c]==1) {
+                    ROW = r;
+                    COL = c;
+                    
+                }
+            }
+        }
         return null;
     }
-    
+    public static List<int[]> validNeighbours(int[][] image, int[][] seen, int r, int c) {
+        int[][] directions = {{-1,0},{1,0},{0,-1},{0,1}};
+        for (int[] dir : directions) {
+
+        }
+        return null;
+    }
 }
