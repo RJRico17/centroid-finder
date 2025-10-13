@@ -64,7 +64,10 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
         seen[r][c] = true;
         pixels.add(new int[]{r,c});
         for (int[] dir : directions) {
-            return dfs(image, seen, r+dir[0], c+dir[1]);
+            if (r+dir[0]<image.length&&
+                r+dir[0]>=0&&
+                c+dir[1]<image[0].length&&
+                c+dir[1]>=0) return dfs(image, seen, r+dir[0], c+dir[1]);
         }
         return pixels;
     }
