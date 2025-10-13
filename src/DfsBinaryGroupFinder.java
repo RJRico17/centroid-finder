@@ -40,18 +40,21 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
         return findConnectedGroups(image, seen, groups);
     }
     public List<Group> findConnectedGroups(int[][] image, boolean[][] seen, List<Group> groups) {
+        int xsum = 0;
+        int ysum = 0;
         for (int r = 0; r < image.length; r++) {
             for (int c = 0; c < image[0].length; c++) {
                 if (image[r][c]==1) {
                     List<int[]> pixels = dfs(image, seen, r, c);
-                }
-                for (int[] location : pixelLocations) {
-                    xsum += location[0];
-                    ysum += location[1];
+                    for (int[] location : pixels) {
+                        xsum += location[0];
+                        ysum += location[1];
+                    }
+                    groups.add(new Group(pixels.size(), new Coordinate(xsum/pixels.size(),ysum/pixels.size())));
                 }
             }
         }
-        return List.of();
+        return groups;
     }
     
     public static List<int[]> dfs(int[][] image, boolean[][] seen, int r, int c) {
