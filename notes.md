@@ -30,5 +30,14 @@ try making new image binary, print new image based off black or white, print suc
 @83:
 run a new imagegroupfinder to find groups of white pixels and return them as a list, write them to csv
 
+Rudolf's Notes
+## Image summary APP
+Convert hex string into 24-bit integer
+Learn about the Euclidean color distance; if a color within the image is within the threshold of the target color, than it turns white, otherwise turn black white (1), black(0).
+
+Convert binary array back ot a bufferedImage (binarized.png). 
+pixels are not connected diagonally (only vertically / horizontally)
+
+
 END
 
