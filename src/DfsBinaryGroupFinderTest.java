@@ -72,7 +72,8 @@ public class DfsBinaryGroupFinderTest {
             new Group(1, new Coordinate(0, 0)), // Top-left
             new Group(1, new Coordinate(2, 0)), // Top-right
             new Group(1, new Coordinate(1, 1)), // Middle
-            new Group(1, new Coordinate(0, 2))  // Bottom-left
+            new Group(1, new Coordinate(0, 2)),  // Bottom-left
+            new Group(1, new Coordinate(2, 2))  // Bottom-right
         );
         assertEquals(expected, groups);
     }
