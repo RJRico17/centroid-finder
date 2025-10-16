@@ -68,6 +68,8 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
         seen[r][c] = true;
         pixels.add(new int[]{c,r});
         for (int[] dir : directions) {
+            //ACCIDENTALLY DID THIS HUMAN CODE WITH AN AI COMMIT i talked to you about hit tho auberon
+            //10.14.2025 https://github.com/grc-cohort-21/centroid-finder/commit/8b71eec2996137ad6581977cd7b2218b52a53e40
             if (r+dir[0]<image.length&&
                 r+dir[0]>=0&&
                 c+dir[1]<image[0].length&&
