@@ -52,10 +52,11 @@ public class DistanceImageBinarizer implements ImageBinarizer {
         int[][] binary = new int[width][height];
         for (int r = 0; r < height; r++) {
             for (int c = 0; c < width; c++) {
-                if (image.getRGB(r, c) > threshold)
+                if (distanceFinder.distance((image.getRGB(r, c) & 0x00FFFFFF), targetColor) >= threshold) binary[r][c] = 0;
+                else binary[r][c] = 1;
             }
         }
-        return null;
+        return binary;
     }
 
     /**
