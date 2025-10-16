@@ -42,7 +42,9 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
     }
     public List<Group> findConnectedGroups(int[][] image, boolean[][] seen, List<Group> groups) {
         for (int r = 0; r < image.length; r++) {
+            if (image[r] == null) throw new NullPointerException();
             for (int c = 0; c < image[0].length; c++) {
+                if (image[r][c] != 0 && image[r][c] != 1) throw new IllegalArgumentException("Contains non binary values");
                 if (image[r][c]==1 && !seen[r][c]) {
                     int xsum = 0;
                     int ysum = 0;
