@@ -92,10 +92,10 @@ public class DistanceImageBinarizerTest {
 
         assertEquals(2, result.getWidth(), "Image width should be 2");
         assertEquals(2, result.getHeight(), "Image height should be 2");
-        assertEquals(0x000000, result.getRGB(0, 0), "White (1) should be black RGB (0x000000)");
-        assertEquals(0xFFFFFF, result.getRGB(0, 1), "Black (0) should be white RGB (0xFFFFFF)");
-        assertEquals(0xFFFFFF, result.getRGB(1, 0), "Black (0) should be white RGB (0xFFFFFF)");
-        assertEquals(0x000000, result.getRGB(1, 1), "White (1) should be black RGB (0x000000)");
+        assertEquals(0xFFFFFF, result.getRGB(0, 0), "White (1) should be black RGB (0x000000)");
+        assertEquals(0x000000, result.getRGB(0, 1), "Black (0) should be white RGB (0xFFFFFF)");
+        assertEquals(0x000000, result.getRGB(1, 0), "Black (0) should be white RGB (0xFFFFFF)");
+        assertEquals(0xFFFFFF, result.getRGB(1, 1), "White (1) should be black RGB (0x000000)");
     }
 
     @Test
