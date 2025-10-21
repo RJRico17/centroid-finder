@@ -1,5 +1,7 @@
 # centroid-finder
 
+![Seize the moment](https://pbs.twimg.com/profile_images/1752423211457773568/HrOQQb74_400x400.jpg)
+
 ## *DO THIS FIRST* Wave 0: AI Rules 
 AI is *NOT ALLOWED* for generating implementations of the classes.
 AI is allowed for helping you make test cases.
