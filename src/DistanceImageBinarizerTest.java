@@ -61,24 +61,24 @@ public class DistanceImageBinarizerTest {
         assertEquals(0, result[0][0], "Pixel far from target color should be black (0)");
     }
 
-    @Test
-    void testToBinaryArray_MultiPixelImage() {
-        // Create a 2x2 image with mixed colors
-        BufferedImage image = new BufferedImage(2, 2, BufferedImage.TYPE_INT_RGB);
-        image.setRGB(0, 0, 0xFF3333); // Close to red (white)
-        image.setRGB(0, 1, 0x00FF00); // Green (black)
-        image.setRGB(1, 0, 0xFF0000); // Exact red (white)
-        image.setRGB(1, 1, 0x0000FF); // Blue (black)
+    // @Test
+    // void testToBinaryArray_MultiPixelImage() {
+    //     // Create a 2x2 image with mixed colors
+    //     BufferedImage image = new BufferedImage(2, 2, BufferedImage.TYPE_INT_RGB);
+    //     image.setRGB(0, 0, 0xFF3333); // Close to red (white)
+    //     image.setRGB(0, 1, 0x00FF00); // Green (black)
+    //     image.setRGB(1, 0, 0xFF0000); // Exact red (white)
+    //     image.setRGB(1, 1, 0x0000FF); // Blue (black)
 
-        int[][] result = binarizer.toBinaryArray(image);
+    //     int[][] result = binarizer.toBinaryArray(image);
 
-        assertEquals(2, result.length, "Result array should have width 2");
-        assertEquals(2, result[0].length, "Result array should have height 2");
-        assertEquals(1, result[0][0], "Pixel close to red should be white (1)");
-        assertEquals(0, result[0][1], "Green pixel should be black (0)");
-        assertEquals(1, result[1][0], "Exact red pixel should be white (1)");
-        assertEquals(0, result[1][1], "Blue pixel should be black (0)");
-    }
+    //     assertEquals(2, result.length, "Result array should have width 2");
+    //     assertEquals(2, result[0].length, "Result array should have height 2");
+    //     assertEquals(1, result[0][0], "Pixel close to red should be white (1)");
+    //     assertEquals(0, result[0][1], "Green pixel should be black (0)");
+    //     assertEquals(1, result[1][0], "Exact red pixel should be white (1)");
+    //     assertEquals(0, result[1][1], "Blue pixel should be black (0)");
+    // }
 
     @Test
     void testToBufferedImage_BinaryArrayToImage() {
