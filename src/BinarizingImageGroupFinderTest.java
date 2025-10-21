@@ -24,7 +24,7 @@ class StubImageBinarizer implements ImageBinarizer {
 
     StubImageBinarizer(int[][] binaryArray) {
         this.binaryArray = binaryArray;
-    }
+    }   
 
     @Override
     public int[][] toBinaryArray(BufferedImage image) {
@@ -51,7 +51,7 @@ class StubBinaryGroupFinder implements BinaryGroupFinder {
         if (binaryArray == null) {
             throw new NullPointerException("Binary array cannot be null");
         }
-        return new ArrayList<>(groups);
+        return groups;
     }
 }
 
@@ -82,10 +82,7 @@ public class BinarizingImageGroupFinderTest {
             {1, 0, 0},
             {0, 0, 1}
         };
-        List<Group> expectedGroups = Arrays.asList(
-            new Group(3, 0, 0), // Group of 3 connected pixels
-            new Group(1, 2, 2)  // Single pixel group
-        );
+        List<Group> expectedGroups = new ArrayList<>();
         finder = new BinarizingImageGroupFinder(
             new StubImageBinarizer(binaryArray),
             new StubBinaryGroupFinder(expectedGroups)
@@ -154,7 +151,7 @@ public class BinarizingImageGroupFinderTest {
             {0, 1, 0},
             {0, 0, 0}
         };
-        List<Group> expectedGroups = Arrays.asList(new Group(1, 1, 1));
+        List<Group> expectedGroups = new ArrayList<>();
         finder = new BinarizingImageGroupFinder(
             new StubImageBinarizer(binaryArray),
             new StubBinaryGroupFinder(expectedGroups)
@@ -164,35 +161,161 @@ public class BinarizingImageGroupFinderTest {
         List<Group> result = finder.findConnectedGroups(image);
 
         // Assert
-        assertEquals(1, result.size(), "Should return a list with one group");
-        assertEquals(expectedGroups.get(0), result.get(0), "Should return the single pixel group");
+        assertSame(expectedGroups, result, "Should return the same list groupfinder got");
+        // assertEquals(expectedGroups.get(0), result.get(0), "Should return the single pixel group");
+    }
+
+    // @Test
+    // void testFindConnectedGroupsWithSortedGroups() {
+    //     // Arrange
+    //     BufferedImage image = new BufferedImage(3, 3, BufferedImage.TYPE_INT_RGB);
+    //     int[][] binaryArray = {
+    //         {1, 1, 0},
+    //         {1, 0, 0},
+    //         {0, 0, 1}
+    //     };
+    //     // Groups are in descending order by size
+    //     List<Group> expectedGroups = Arrays.asList(
+    //         new Group(3, 0, 0), // Larger group
+    //         new Group(1, 2, 2)  // Smaller group
+    //     );
+    //     finder = new BinarizingImageGroupFinder(
+    //         new StubImageBinarizer(binaryArray),
+    //         new StubBinaryGroupFinder(expectedGroups)
+    //     );
+
+    //     // Act
+    //     List<Group> result = finder.findConnectedGroups(image);
+
+    //     // Assert
+    //     assertEquals(expectedGroups, result, "Should return groups in descending order by size");
+    //     assertEquals(3, result.get(0).size(), "First group should have size 3");
+    //     assertEquals(1, result.get(1).size(), "Second group should have size 1");
+    // }
+
+    @Test
+    void wiresBinarizerToGroupFinder_andReturnsSameListInstance() {
+        BufferedImage input = new BufferedImage(3, 2, BufferedImage.TYPE_INT_RGB);
+
+        int[][] expectedBinary = new int[][] {
+            {1, 0, 1},
+            {0, 1, 0}
+        };
+
+        // Always returns expectedBinary
+        ImageBinarizer binarizer = new ImageBinarizer() {
+            @Override public int[][] toBinaryArray(BufferedImage image) { 
+                assertSame(input, image, "Binarizer must receive the same BufferedImage");
+                return expectedBinary; 
+            }
+            @Override public BufferedImage toBufferedImage(int[][] image) { return null; }
+        };
+
+        List<Group> expectedGroups = new ArrayList<>();
+        final boolean[] sawCall = { false };
+        BinaryGroupFinder groupFinder = new BinaryGroupFinder() {
+            @Override public List<Group> findConnectedGroups(int[][] binary) {
+                sawCall[0] = true;
+                assertSame(expectedBinary, binary, "GroupFinder must receive the binarizer's exact array");
+                return expectedGroups;
+            }
+        };
+
+        BinarizingImageGroupFinder sut = new BinarizingImageGroupFinder(binarizer, groupFinder);
+
+        List<Group> actual = sut.findConnectedGroups(input);
+
+        assertTrue(sawCall[0], "GroupFinder should be called");
+        assertSame(expectedGroups, actual, "Should return exactly the list from GroupFinder");
     }
 
     @Test
-    void testFindConnectedGroupsWithSortedGroups() {
-        // Arrange
-        BufferedImage image = new BufferedImage(3, 3, BufferedImage.TYPE_INT_RGB);
-        int[][] binaryArray = {
-            {1, 1, 0},
-            {1, 0, 0},
-            {0, 0, 1}
+    void propagatesIfBinarizerThrows_andDoesNotCallGroupFinder() {
+        ImageBinarizer binarizer = new ImageBinarizer() {
+            @Override public int[][] toBinaryArray(BufferedImage image) { 
+                throw new RuntimeException("binarize boom"); 
+            }
+            @Override public BufferedImage toBufferedImage(int[][] image) { return null; }
         };
-        // Groups are in descending order by size
-        List<Group> expectedGroups = Arrays.asList(
-            new Group(3, 0, 0), // Larger group
-            new Group(1, 2, 2)  // Smaller group
-        );
-        finder = new BinarizingImageGroupFinder(
-            new StubImageBinarizer(binaryArray),
-            new StubBinaryGroupFinder(expectedGroups)
-        );
 
-        // Act
-        List<Group> result = finder.findConnectedGroups(image);
+        final boolean[] gfCalled = { false };
+        BinaryGroupFinder groupFinder = new BinaryGroupFinder() {
+            @Override public List<Group> findConnectedGroups(int[][] image) {
+                gfCalled[0] = true;
+                return List.of();
+            }
+        };
 
-        // Assert
-        assertEquals(expectedGroups, result, "Should return groups in descending order by size");
-        assertEquals(3, result.get(0).size(), "First group should have size 3");
-        assertEquals(1, result.get(1).size(), "Second group should have size 1");
+        BinarizingImageGroupFinder sut = new BinarizingImageGroupFinder(binarizer, groupFinder);
+
+        RuntimeException ex = assertThrows(RuntimeException.class,
+            () -> sut.findConnectedGroups(new BufferedImage(1,1,BufferedImage.TYPE_INT_RGB)));
+        assertEquals("binarize boom", ex.getMessage());
+        assertFalse(gfCalled[0], "GroupFinder must NOT be called if binarizer fails");
     }
+
+    @Test
+    void propagatesIfGroupFinderThrows_afterSuccessfulBinarize() {
+        int[][] binary = new int[][] { {1} };
+
+        ImageBinarizer binarizer = new ImageBinarizer() {
+            @Override public int[][] toBinaryArray(BufferedImage image) { return binary; }
+            @Override public BufferedImage toBufferedImage(int[][] image) { return null; }
+        };
+
+        BinaryGroupFinder groupFinder = new BinaryGroupFinder() {
+            @Override public List<Group> findConnectedGroups(int[][] image) {
+                assertSame(binary, image, "GroupFinder must receive the exact array from binarizer");
+                throw new IllegalStateException("group boom");
+            }
+        };
+
+        BinarizingImageGroupFinder sut = new BinarizingImageGroupFinder(binarizer, groupFinder);
+
+        IllegalStateException ex = assertThrows(IllegalStateException.class,
+            () -> sut.findConnectedGroups(new BufferedImage(1,1,BufferedImage.TYPE_INT_RGB)));
+        assertEquals("group boom", ex.getMessage());
+    }
+
+    @Test
+    void returnsEmptyListWhenGroupFinderReturnsEmpty() {
+        ImageBinarizer binarizer = new ImageBinarizer() {
+            @Override public int[][] toBinaryArray(BufferedImage image) { return new int[][] {{0,0},{0,0}}; }
+            @Override public BufferedImage toBufferedImage(int[][] image) { return null; }
+        };
+
+        BinaryGroupFinder groupFinder = new BinaryGroupFinder() {
+            @Override public List<Group> findConnectedGroups(int[][] image) { return List.of(); }
+        };
+
+        BinarizingImageGroupFinder sut = new BinarizingImageGroupFinder(binarizer, groupFinder);
+
+        List<Group> out = sut.findConnectedGroups(new BufferedImage(2,2,BufferedImage.TYPE_INT_RGB));
+        assertNotNull(out);
+        assertTrue(out.isEmpty(), "Should return an empty list when group finder returns empty");
+    }
+
+    @Test
+    void nullImage_propagatesFromBinarizer() {
+        ImageBinarizer binarizer = new ImageBinarizer() {
+            @Override public int[][] toBinaryArray(BufferedImage image) {
+                if (image == null) throw new NullPointerException("image is null");
+                return new int[][] {{0}};
+            }
+            @Override public BufferedImage toBufferedImage(int[][] image) { return null; }
+        };
+
+        BinaryGroupFinder groupFinder = new BinaryGroupFinder() {
+            @Override public List<Group> findConnectedGroups(int[][] image) { return List.of(); }
+        };
+
+        BinarizingImageGroupFinder sut = new BinarizingImageGroupFinder(binarizer, groupFinder);
+
+        assertThrows(NullPointerException.class, () -> sut.findConnectedGroups(null));
+    }
+
+
+
+
+    
 }
