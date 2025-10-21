@@ -112,7 +112,7 @@ public class BinarizingImageGroupFinderTest {
     @Test
     void testFindConnectedGroupsWithEmptyImage() {
         // Arrange
-        BufferedImage image = new BufferedImage(0, 0, BufferedImage.TYPE_INT_RGB);
+        BufferedImage image = new BufferedImage(2, 2, BufferedImage.TYPE_INT_RGB);
         finder = new BinarizingImageGroupFinder(
             new StubImageBinarizer(new int[0][0]),
             new StubBinaryGroupFinder(Collections.emptyList())
