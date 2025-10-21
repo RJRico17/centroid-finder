@@ -10,13 +10,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 // Stub implementation of Group (adjust based on actual Group definition)
-record Group(int size, int x, int y) implements Comparable<Group> {
-    @Override
-    public int compareTo(Group other) {
-        // Assume descending order by size for sorting
-        return Integer.compare(other.size, this.size);
-    }
-}
+// record Group(int size, int x, int y) implements Comparable<Group> {
+//     @Override
+//     public int compareTo(Group other) {
+//         // Assume descending order by size for sorting
+//         return Integer.compare(other.size, this.size);
+//     }
+// }
 
 // Stub implementation of ImageBinarizer
 class StubImageBinarizer implements ImageBinarizer {
@@ -25,6 +25,12 @@ class StubImageBinarizer implements ImageBinarizer {
     StubImageBinarizer(int[][] binaryArray) {
         this.binaryArray = binaryArray;
     }   
+    
+    @Override
+    public BufferedImage toBufferedImage(int[][] image) { 
+        return null; 
+    }
+
 
     @Override
     public int[][] toBinaryArray(BufferedImage image) {
@@ -67,6 +73,7 @@ public class BinarizingImageGroupFinderTest {
             new StubBinaryGroupFinder(Collections.emptyList())
         );
     }
+    
 
     @Test
     void testConstructorWithValidDependencies() {
