@@ -54,7 +54,7 @@ public class DistanceImageBinarizer implements ImageBinarizer {
             for (int c = 0; c < width; c++) {
                 int rgbNoAlpha = image.getRGB(c, r) & 0x00FFFFFF; // Strips Alpha
                 double d = distanceFinder.distance(rgbNoAlpha, targetColor);
-                binary[r][c] = (d <= threshold) ? 1 : 0; // ternary operator
+                binary[r][c] = (d < threshold) ? 1 : 0; // ternary operator
                 // if (distanceFinder.distance((image.getRGB(r, c) & 0x00FFFFFF), targetColor) >= threshold) binary[r][c] = 0;
                 // else binary[r][c] = 1;
             }
@@ -75,11 +75,15 @@ public class DistanceImageBinarizer implements ImageBinarizer {
         int height = image.length;
         int width = image[0].length;
 
-        BufferedImage out = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        BufferedImage out = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
         for (int r = 0; r < height; r++) {
             for (int c = 0; c < width; c++) {
-                int color = (image[r][c] == 1) ? 0xFFFFFF : 0x000000;
+                int value = image[r][c];
+                if (value != 0 && value != 1) {
+                    throw new IllegalArgumentException("Binary values must be 0 or 1");
+                }
+                int color = (value == 1) ? 0x00FFFFFF : 0x00000000;
                 out.setRGB(c, r, color);
             }
         }

@@ -4,9 +4,9 @@ import java.awt.image.BufferedImage;
 import static org.junit.jupiter.api.Assertions.*;
 
 // Mock implementation of ColorDistanceFinder for testing
-interface ColorDistanceFinder {
-    double distance(int color1, int color2);
-}
+// interface ColorDistanceFinder {
+//     double distance(int color1, int color2);
+// }
 
 class MockColorDistanceFinder implements ColorDistanceFinder {
     @Override

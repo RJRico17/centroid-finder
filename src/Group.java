@@ -31,11 +31,11 @@ public record Group(int size, Coordinate centroid) implements Comparable<Group> 
         if (comp != 0) {
             return comp;
         }
-        comp = Integer.compare(this.centroid().x(), other.centroid().x());
+        comp = Integer.compare(other.centroid().x(), this.centroid().x());
         if (comp != 0) {
             return comp;
         }
-        return Integer.compare(this.centroid().y(), other.centroid().y());
+        return Integer.compare(other.centroid().y(), this.centroid().y());
     }
 
     /**
