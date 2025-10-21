@@ -49,11 +49,14 @@ public class DistanceImageBinarizer implements ImageBinarizer {
         //y = width
         int width = image.getWidth();
         int height = image.getHeight();
-        int[][] binary = new int[width][height];
+        int[][] binary = new int[height][width]; 
         for (int r = 0; r < height; r++) {
             for (int c = 0; c < width; c++) {
-                if (distanceFinder.distance((image.getRGB(r, c) & 0x00FFFFFF), targetColor) >= threshold) binary[r][c] = 0;
-                else binary[r][c] = 1;
+                int rgbNoAlpha = image.getRGB(c, r) & 0x00FFFFFF; // Strips Alpha
+                double d = distanceFinder.distance(rgbNoAlpha, targetColor);
+                binary[r][c] = (d <= threshold) ? 1 : 0; // ternary operator
+                // if (distanceFinder.distance((image.getRGB(r, c) & 0x00FFFFFF), targetColor) >= threshold) binary[r][c] = 0;
+                // else binary[r][c] = 1;
             }
         }
         return binary;
