@@ -1,3 +1,5 @@
+package io.github.rjrico17.centroidfinder;
+
 import java.util.List;
 import java.awt.image.BufferedImage;
 

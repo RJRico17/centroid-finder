@@ -1,3 +1,5 @@
+package io.github.rjrico17.centroidfinder;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.awt.image.BufferedImage;

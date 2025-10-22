@@ -1,3 +1,5 @@
+package io.github.rjrico17.centroidfinder;
+
 //AI USED
 //AI USED
 //AI USED

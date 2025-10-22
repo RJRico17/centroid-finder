@@ -1,3 +1,5 @@
+package io.github.rjrico17.centroidfinder;
+
 /**
  * Represents a location in an image or array
  * 
