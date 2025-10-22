@@ -33,6 +33,14 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.2.5</version>
       </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.6.2</version>
+        <configuration>
+          <mainClass>io.github.rjrico17.centroidfinder.ImageSummaryApp</mainClass>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 
