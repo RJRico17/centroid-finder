@@ -16,6 +16,27 @@
       <version>5.10.0</version>
       <scope>test</scope>
     </dependency>
+
+      <!-- Core BoofCV library -->
+    <dependency>
+      <groupId>org.boofcv</groupId>
+      <artifactId>boofcv-core</artifactId>
+      <version>0.43.2</version>
+    </dependency>
+
+    <!-- For loading/saving images or video -->
+    <dependency>
+      <groupId>org.boofcv</groupId>
+      <artifactId>boofcv-io</artifactId>
+      <version>0.43.2</version>
+    </dependency>
+
+    <!-- Optional but useful for blob detection, contours, etc. -->
+    <dependency>
+      <groupId>org.boofcv</groupId>
+      <artifactId>boofcv-recognition</artifactId>
+      <version>0.43.2</version>
+    </dependency>
   </dependencies>
 
   <build>
