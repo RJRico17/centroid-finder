@@ -19,10 +19,11 @@
 
     <!-- https://mvnrepository.com/artifact/org.boofcv/boofcv-io -->
     <dependency>
-        <groupId>org.boofcv</groupId>
-        <artifactId>boofcv-io</artifactId>
-        <version>1.2.4</version>
+      <groupId>org.boofcv</groupId>
+      <artifactId>boofcv-all</artifactId>
+      <version>1.2.4</version>
     </dependency>
+
   </dependencies>
 
   <build>
