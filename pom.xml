@@ -18,11 +18,22 @@
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/org.boofcv/boofcv-io -->
+    <!-- It does not ship FFmpeg’s native codecs. So by itself it can’t decode most .mp4 files.-->
     <dependency>
-        <groupId>org.boofcv</groupId>
-        <artifactId>boofcv-io</artifactId>
-        <version>1.2.4</version>
+      <groupId>org.boofcv</groupId>
+      <artifactId>boofcv-all</artifactId>
+      <version>1.2.4</version>
     </dependency>
+
+    <!-- Brings us FFmpegFrameGrabber, FrameRecorder, etc -->
+    <dependency>
+      <groupId>org.bytedeco</groupId>
+      <artifactId>javacv-platform</artifactId>
+      <version>1.5.10</version>
+    </dependency>
+
+
+
   </dependencies>
 
   <build>
@@ -33,6 +44,7 @@
         <version>3.13.0</version>
         <configuration>
           <release>23</release>
+          <release>21</release>
         </configuration>
       </plugin>
       <plugin>
@@ -45,7 +57,8 @@
         <artifactId>exec-maven-plugin</artifactId>
         <version>3.6.2</version>
         <configuration>
-          <mainClass>io.github.rjrico17.centroidfinder.ImageSummaryApp</mainClass>
+          <!-- <mainClass>io.github.rjrico17.centroidfinder.ImageSummaryApp</mainClass> -->
+          <mainClass>io.github.rjrico17.centroidfinder.VideoProbe</mainClass>
         </configuration>
       </plugin>
 

@@ -19,17 +19,34 @@ jobs:
           distribution: 'temurin'
           java-version: '23'
 
+      - name: Build dependency classpath with Maven
+        run: |
+          mvn -q -DincludeScope=test -DskipTests dependency:build-classpath -Dmdep.outputFile=cp.txt
+
+      #- name: Compile
+      #  run: |
+      #    mkdir -p src
+      #    javac -cp lib/junit-platform-console-standalone-1.12.0.jar src/*.java
       - name: Compile
         run: |
-          mkdir -p src
-          javac -cp lib/junit-platform-console-standalone-1.12.0.jar src/*.java
+          mkdir -p target/classes
+          CP="$(cat cp.txt):lib/junit-platform-console-standalone-1.12.0.jar"
+          find src -name '*.java' > sources.txt
+          javac --release 23 -cp "$CP" -d target/classes @sources.txt
+
+
+
 
       - name: Run and Verify Tests
         run: |
           # Ensure that the pipeline fails if any command fails.
           set -o pipefail
           # Run tests and tee output to both the console and a file.
-          java -jar lib/junit-platform-console-standalone-1.12.0.jar -cp src --scan-classpath | tee test-results.txt
+          CP="target/classes:$(cat cp.txt)"
+          java -jar lib/junit-platform-console-standalone-1.12.0.jar -cp "$CP" --scan-classpath | tee test-results.txt
+
+          # java -jar lib/junit-platform-console-standalone-1.12.0.jar -cp src --scan-classpath | tee test-results.txt
+
           # Capture the exit code of the java command.
           exit_code=${PIPESTATUS[0]}
           if [ $exit_code -ne 0 ]; then
