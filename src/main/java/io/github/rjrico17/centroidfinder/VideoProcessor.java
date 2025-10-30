@@ -15,6 +15,24 @@ import boofcv.struct.image.ImageType;
 
 
 public class VideoProcessor {
+
+    public static class TimestampedFrame {
+        private final BufferedImage image;
+        private final double timeInSeconds;
+        
+        public TimestampedFrame(BufferedImage image, double timeInSeconds) {
+            this.image = image;
+            this.timeInSeconds = timeInSeconds;
+        }
+        
+        public BufferedImage getImage() {
+            return image;
+        }
+        
+        public double getTimeInSeconds() {
+            return timeInSeconds;
+        }
+    }
     public static List<BufferedImage> processVideo(String path) {
         List<BufferedImage> list = new ArrayList<>(); 
             // SimpleImageSequence<Planar<GrayU8>> seq = BoofVideoManager

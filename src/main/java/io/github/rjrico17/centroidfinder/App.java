@@ -8,7 +8,7 @@ public class App {
         VideoArgProcessor config = new VideoArgProcessor(args);
 
         ColorDistanceFinder distanceFinder = new EuclideanColorDistance();
-        ImageBinarizer binarizer = new DistanceImageBinarizer(distanceFinder, config.getTargetColor(), config.getTargetColor());
+        ImageBinarizer binarizer = new DistanceImageBinarizer(distanceFinder, config.getTargetColor(), config.getThreshold());
         
         // int[][] binarized = binarizer.toBinaryArray(ImageIO.read(new File(config.getInputPath())));
         // BufferedImage buffered = binarizer.toBufferedImage(binarized);
@@ -17,8 +17,8 @@ public class App {
 
 
         List<BufferedImage> frames = VideoProcessor.processVideo(config.getInputPath());
-        try (PrintWriter writer = new PrintWriter("groups.csv")) {
-            for (BufferedImage img : frames) {
+        try (PrintWriter writer = new PrintWriter(config.getOutputCsv())) {
+            for (VideoProcessor.TimestampedFrame frame : frames) {
                 List<Group> groups = groupFinder.findConnectedGroups(img);
                 for (Group group : groups) {
                     writer.println(group.toCsvRow());
