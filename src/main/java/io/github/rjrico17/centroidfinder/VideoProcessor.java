@@ -1,18 +1,11 @@
 package io.github.rjrico17.centroidfinder;
 import java.awt.image.BufferedImage;
-import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.List;
 
-import boofcv.io.MediaManager;
-import boofcv.io.image.ConvertBufferedImage;
-import boofcv.io.image.SimpleImageSequence;
-import boofcv.io.wrapper.DefaultMediaManager;
-import boofcv.io.video.BoofVideoManager;
-import boofcv.struct.image.Planar;
-import boofcv.struct.image.GrayU8;
-import boofcv.struct.image.ImageType;
-
+import org.bytedeco.javacv.FFmpegFrameGrabber;
+import org.bytedeco.javacv.Frame;
+import org.bytedeco.javacv.Java2DFrameConverter;
 
 public class VideoProcessor {
 
@@ -33,8 +26,8 @@ public class VideoProcessor {
             return timeInSeconds;
         }
     }
-    public static List<BufferedImage> processVideo(String path) {
-        List<BufferedImage> list = new ArrayList<>(); 
+    public static List<TimestampedFrame> processVideo(String path) {
+        List<TimestampedFrame> list = new ArrayList<>(); 
             // SimpleImageSequence<Planar<GrayU8>> seq = BoofVideoManager
             // .loadManagerDefault()
             // .loadVideo(path, ImageType.pl(3, GrayU8.class));

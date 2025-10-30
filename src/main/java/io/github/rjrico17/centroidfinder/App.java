@@ -16,12 +16,20 @@ public class App {
         ImageGroupFinder groupFinder = new BinarizingImageGroupFinder(binarizer, new DfsBinaryGroupFinder());
 
 
-        List<BufferedImage> frames = VideoProcessor.processVideo(config.getInputPath());
+        List<VideoProcessor.TimestampedFrame> frames = VideoProcessor.processVideo(config.getInputPath());
         try (PrintWriter writer = new PrintWriter(config.getOutputCsv())) {
             for (VideoProcessor.TimestampedFrame frame : frames) {
-                List<Group> groups = groupFinder.findConnectedGroups(img);
-                for (Group group : groups) {
-                    writer.println(group.toCsvRow());
+                double time = frame.getTimeInSeconds();
+                BufferedImage image = frame.getImage();
+
+                List<Group> groups = groupFinder.findConnectedGroups(image);
+
+                if (groups.isEmpty()) {
+                    // writer class lets us write character streams like shown below
+                    writer.printf("%.3f,%d,%d%n", time, -1, -1);
+                } else {
+                    Group largest = groups.get(0);
+                    writer.printf("%.3f,%d,%d%n", time, largest.centroid().x(), largest.centroid().y());
                 }
             }
             System.out.println("Groups summary saved as groups.csv");
