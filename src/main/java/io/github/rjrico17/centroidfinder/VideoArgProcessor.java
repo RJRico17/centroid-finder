@@ -19,6 +19,7 @@ public class VideoArgProcessor {
     public VideoArgProcessor(String args[]) {
         if (args.length != 4) {
             System.err.println("Error use: java -jar videoprocessor.jar inputPath outputCsv targetColor threshold");
+            System.exit(1); // Need this to exit the program or else it continues and crashes
         }
 
         this.inputPath = args[0];
