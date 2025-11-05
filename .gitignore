@@ -28,3 +28,4 @@ replay_pid*
 *.mp4
 
 /server/node_modules
+.env
