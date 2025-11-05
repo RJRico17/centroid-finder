@@ -1,12 +1,12 @@
 import dotenv from 'dotenv';
-const fs = require('fs');
+import fs from 'fs';
 
 dotenv.config()
 const { ROUTE } = process.env;
 
 export const getVideos = (req,res) => {
     const list = [];
-    const files = fs.readdirSync(ROUTE);
+    const files = fs.readdirSync('C:\Users\fredr\OneDrive\SDEV334\centroid-finder\server\videos');
     files.forEach((file) => {
         list.push(file);
     })
