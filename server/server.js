@@ -1,4 +1,5 @@
 import express from 'express';
+import salamanderRouter from './routes.js';
 
 const app = express();
 const PORT = 3000;

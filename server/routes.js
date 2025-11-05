@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getStatus, getThumbnail, getVideos, processVideo } from './controller';
+import { getStatus, getThumbnail, getVideos, processVideo } from './controller.js';
 
 const router = Router();
 
@@ -14,3 +14,5 @@ router.get('/process/:filename', processVideo);
 
 //GET /process/{jobId}/status
 router.get('/process/:jobId/status', getStatus);
+
+export default router;
