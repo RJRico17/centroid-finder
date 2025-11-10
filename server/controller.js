@@ -6,7 +6,7 @@ const { ROUTE } = process.env;
 
 export const getVideos = (req,res) => {
     const list = [];
-    const files = fs.readdirSync('C:\Users\fredr\OneDrive\SDEV334\centroid-finder\server\videos');
+    const files = fs.readdirSync('videos');
     files.forEach((file) => {
         list.push(file);
     })
