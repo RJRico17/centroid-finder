@@ -11,5 +11,5 @@ app.use(express.json());
 app.use('/', salamanderRouter);
 
 app.listen(PORT,()=>{
-    console.log(`Server is running on http://localhost:${PORT}/home`);
+    console.log(`Server is running on http://localhost:${PORT}`);
 });
