@@ -33,8 +33,13 @@ jobs:
         run: |
           mkdir -p target/classes
           CP="$(cat cp.txt):../lib/junit-platform-console-standalone-1.12.0.jar"
+          # Compile main sources
           find src/main/java -name '*.java' > sources.txt
           javac --release 23 -cp "$CP" -d target/classes @sources.txt
+
+          # Compile test sources too
+          find src/test/java -name '*.java' > test-sources.txt
+          javac --release 23 -cp "$CP:target/classes" -d target/test-classes @test-sources.txt
 
 
 
