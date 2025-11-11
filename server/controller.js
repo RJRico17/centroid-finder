@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import { exec } from 'child_process';
 import fs from 'fs';
 import path from 'path'; // Added for cross-platform paths
 import { spawn } from "child_process"; // runs java jar
