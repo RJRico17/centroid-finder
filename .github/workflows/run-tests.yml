@@ -20,6 +20,7 @@ jobs:
           java-version: '23'
 
       - name: Build dependency classpath with Maven
+        working-directory: ./processor
         run: |
           mvn -q -DincludeScope=test -DskipTests dependency:build-classpath -Dmdep.outputFile=cp.txt
 
@@ -28,16 +29,18 @@ jobs:
       #    mkdir -p src
       #    javac -cp lib/junit-platform-console-standalone-1.12.0.jar src/*.java
       - name: Compile
+        working-directory: ./processor
         run: |
           mkdir -p target/classes
           CP="$(cat cp.txt):lib/junit-platform-console-standalone-1.12.0.jar"
-          find src -name '*.java' > sources.txt
+          find src/main/java -name '*.java' > sources.txt
           javac --release 23 -cp "$CP" -d target/classes @sources.txt
 
 
 
 
       - name: Run and Verify Tests
+        working-directory: ./processor
         run: |
           # Ensure that the pipeline fails if any command fails.
           set -o pipefail
