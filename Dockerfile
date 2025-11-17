@@ -1,5 +1,5 @@
 # java part
-FROM maven:3.9.0-eclipse-temurin-17 AS build
+FROM maven:3.9.3-eclipse-temurin-17 AS build
 
 ENV VIDEO_DIRECTORY=/videos
 ENV RESULT_DIRECTORY=/results
@@ -13,13 +13,13 @@ RUN mvn clean package -DskipTests
 # node time node time node tiem
 FROM node:20-alpine AS node-build
 WORKDIR /server
-COPY server/package*.jsob ./
+COPY server/package*.json ./
 # install node_modules i recognize that
 RUN npm install
 COPY server ./
 
 # witht he pwoer of friendship bring it all together
-FROM eclipse-temurin:17-jdk-alpine
+FROM eclipse-temurin:23-jdk-alpine
 WORKDIR /app
 
 #jar
