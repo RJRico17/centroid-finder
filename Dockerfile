@@ -1,5 +1,9 @@
 # java part
 FROM maven:3.9.0-eclipse-temurin-17 AS build
+
+ENV VIDEO_DIRECTORY=/videos
+ENV RESULT_DIRECTORY=/results
+
 WORKDIR /app
 COPY processor/pom.xml .
 COPY processor/src ./src
