@@ -1,0 +1,16 @@
+io\github\rjrico17\centroidfinder\VideoArgProcessor.class
+io\github\rjrico17\centroidfinder\VideoProcessor.class
+io\github\rjrico17\centroidfinder\Coordinate.class
+io\github\rjrico17\centroidfinder\VideoProbe.class
+io\github\rjrico17\centroidfinder\VideoProcessor$TimestampedFrame.class
+io\github\rjrico17\centroidfinder\ColorDistanceFinder.class
+io\github\rjrico17\centroidfinder\ImageSummaryApp.class
+io\github\rjrico17\centroidfinder\BinaryGroupFinder.class
+io\github\rjrico17\centroidfinder\App.class
+io\github\rjrico17\centroidfinder\DfsBinaryGroupFinder.class
+io\github\rjrico17\centroidfinder\BinarizingImageGroupFinder.class
+io\github\rjrico17\centroidfinder\DistanceImageBinarizer.class
+io\github\rjrico17\centroidfinder\Group.class
+io\github\rjrico17\centroidfinder\ImageBinarizer.class
+io\github\rjrico17\centroidfinder\ImageGroupFinder.class
+io\github\rjrico17\centroidfinder\EuclideanColorDistance.class
