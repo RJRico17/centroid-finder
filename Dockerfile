@@ -20,6 +20,9 @@ COPY server ./
 
 # witht he pwoer of friendship bring it all together
 FROM eclipse-temurin:23-jdk-alpine
+
+RUN apk add --no-cache nodejs npm
+
 WORKDIR /app
 
 #jar
