@@ -8,7 +8,9 @@ import { v4 as uuidv4 } from 'uuid'; // for unique job ID's
 dotenv.config()
 const { ROUTE } = process.env;
 
-const VIDEO_DIR = '/videos';
+// const VIDEO_DIR = path.join(process.cwd(), 'server', 'videos');
+const VIDEO_DIR = '/videos'
+
 const OUTPUT_DIR = '/results';
 const JAR_PATH = path.join(process.cwd(), 'processor', 'target', 'centroid-finder-1.0-SNAPSHOT.jar');
 
