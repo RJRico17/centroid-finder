@@ -10,8 +10,8 @@ const { ROUTE } = process.env;
 
 // const VIDEO_DIR = path.join(process.cwd(), 'server', 'videos');
 const VIDEO_DIR = '/videos'
-
 const OUTPUT_DIR = '/results';
+
 const JAR_PATH = path.join(process.cwd(), 'processor', 'target', 'centroid-finder-1.0-SNAPSHOT.jar');
 
 const jobs = {};
