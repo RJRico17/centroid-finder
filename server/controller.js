@@ -9,7 +9,7 @@ dotenv.config()
 const { ROUTE } = process.env;
 
 const VIDEO_DIR = '/videos';
-const OUTPUT_DIR = path.join(process.cwd(), 'processor', 'sampleOutput');
+const OUTPUT_DIR = '/results';
 const JAR_PATH = path.join(process.cwd(), 'processor', 'target', 'centroid-finder-1.0-SNAPSHOT.jar');
 
 const jobs = {};
@@ -19,8 +19,8 @@ export const getVideos = (req,res) => {
     const list = [];
     
     // const files = fs.readdirSync('C:\Users\fredr\OneDrive\SDEV334\centroid-finder\server\videos'); 
-    const videoDir = path.join(process.cwd(), 'server', 'videos');
-    const files = fs.readdirSync(videoDir);
+    const files = fs.readdirSync(VIDEO_DIR);
+
 
     files.forEach((file) => {
         list.push(file);
