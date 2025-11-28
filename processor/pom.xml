@@ -55,17 +55,10 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.2.5</version>
       </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>exec-maven-plugin</artifactId>
-        <version>3.6.2</version>
-        <configuration>
-          <!-- <mainClass>io.github.rjrico17.centroidfinder.ImageSummaryApp</mainClass> -->
-          <mainClass>io.github.rjrico17.centroidfinder.VideoProbe</mainClass>
-        </configuration>
-      </plugin>
 
-    <!-- PLUGIN FOR JAR -->
+      <!-- PLUGIN FOR JAR -->
+    <!-- Creates fat JAR with all dependencies so Docker can run it -->
+
         <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
         <version>3.6.0</version>
@@ -92,6 +85,16 @@
             </execution>
         </executions>
     </plugin>
+    
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.6.2</version>
+        <configuration>
+          <mainClass>io.github.rjrico17.centroidfinder.VideoProbe</mainClass>
+        </configuration>
+      </plugin>
+
     </plugins>
   </build>
 
