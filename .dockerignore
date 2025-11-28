@@ -4,3 +4,9 @@ target/
 *.jar
 node_modules
 .git
+.vscode
+sampleInput
+sampleOutput
+outputFrames
+.gitignore
+README.md
