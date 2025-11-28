@@ -37,6 +37,14 @@ export const getThumbnail = (req,res) => {
 export const processVideo = (req,res) => {
     const { filename } = req.params;
     const inputPath = path.join(VIDEO_DIR, filename);
+
+    // Validate if the file extension is supported
+    if (!filename.toLowerCase().endsWith(".mp4")) {
+        return res.status(400).json({
+            error: "Invalid file type. Only MP4 videos are supported."
+        });
+    }
+
     const jobId = uuidv4();
     const outputPath = path.join(OUTPUT_DIR, `${jobId}_${filename}`);
 
