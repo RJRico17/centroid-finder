@@ -38,6 +38,10 @@ export const processVideo = (req,res) => {
     const { filename } = req.params;
     const inputPath = path.join(VIDEO_DIR, filename);
 
+    // validate the file exists before processing
+    if (!fs.existsSync(inputPath)) {
+        return res.status(400).json({
+            error: `File not found: ${filename}`
     // Validate if the file extension is supported
     if (!filename.toLowerCase().endsWith(".mp4")) {
         return res.status(400).json({
