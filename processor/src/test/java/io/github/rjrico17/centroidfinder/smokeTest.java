@@ -8,5 +8,5 @@ public class SmokeTest {
     @Test
     void testJUnitIsWorking() {
         assertTrue(true);
-    }
+    } 
 }
