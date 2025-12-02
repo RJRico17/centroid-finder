@@ -5,8 +5,8 @@ target/
 node_modules
 .git
 .vscode
-sampleInput
-sampleOutput
+processor/sampleInput
+processor/sampleOutput
 outputFrames
 .gitignore
 README.md
