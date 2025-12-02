@@ -30,7 +30,18 @@ export const getVideos = (req,res) => {
     return res.json({ videos: list });
 }
 export const getThumbnail = (req,res) => {
-    return res.json({ message: 'No Thumbnail' });
+    const file = req.params.filename;
+    exec(`ffmpeg -i videos/${file} -frames:v 1 thumbnail.jpeg`, (err, stdout, stderr) => {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        if (stdout) {
+            console.log(stdout);
+            return
+        }
+        console.log(stderr);
+    })
 }
 
 // Starts new background job to process video with Java JAR
