@@ -31,7 +31,7 @@ export const getVideos = (req,res) => {
 }
 export const getThumbnail = (req,res) => {
     const file = req.params.filename;
-    exec(`ffmpeg -i videos/${file} -frames:v 1 thumbnail.jpeg`, (err, stdout, stderr) => {
+    exec(`ffmpeg -i "/videos/${file}" -frames:v 1 thumbnail.jpeg`, (err, stdout, stderr) => {
         if (err) {
             console.log(err);
             return;
