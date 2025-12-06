@@ -31,16 +31,16 @@ export const getVideos = (req,res) => {
 }
 export const getThumbnail = (req,res) => {
     const file = req.params.filename;
-    exec(`ffmpeg -i "/videos/${file}" -frames:v 1 thumbnail.jpeg`, (err, stdout, stderr) => {
+    const fullpath = path.join(VIDEO_DIR, file);
+    res.setHeader("Content-Type", "image/jpeg");
+    exec(`ffmpeg -i "${fullpath}" -ss 00:00:01 -frames:v 1 -f image2 pipe:1`, 
+    { encoding: "buffer", maxBuffer: 10 * 1024 * 1024 }, (err, stdout, stderr) => {
         if (err) {
             console.log(err);
             return;
         }
-        if (stdout) {
-            console.log(stdout);
-            return
-        }
         console.log(stderr);
+        res.send(stdout);
     })
 }
 
@@ -64,6 +64,7 @@ export const processVideo = (req,res) => {
 
     const jobId = uuidv4();
     const outputPath = path.join(OUTPUT_DIR, `${jobId}_${filename}`);
+    console.log(`Job started @ ${jobId}`)
 
     // Launch the JAR as a detached process
     const child = spawn('java', ['-jar', JAR_PATH, inputPath, outputPath], {

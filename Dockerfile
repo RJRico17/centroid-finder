@@ -16,6 +16,7 @@ WORKDIR /server
 COPY server/package*.json ./
 # install node_modules i recognize that
 RUN npm install
+RUN npm install ffmpeg
 COPY server ./
 
 # witht he pwoer of friendship bring it all together
