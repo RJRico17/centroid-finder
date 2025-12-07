@@ -29,6 +29,17 @@ export const getVideos = (req,res) => {
     })
     return res.json({ videos: list });
 }
+
+export const getResults = (req,res) => {
+    const list = [];
+
+    const files = fs.readdirSync(OUTPUT_DIR);
+    files.forEach((file) => {
+        list.push(file);
+    })
+    return res.json({ results: list });
+}
+
 export const getThumbnail = (req,res) => {
     const file = req.params.filename;
     const fullpath = path.join(VIDEO_DIR, file);

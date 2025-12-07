@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getStatus, getThumbnail, getVideos, processVideo } from './controller.js';
+import { getResults, getStatus, getThumbnail, getVideos, processVideo } from './controller.js';
 
 const router = Router();
 
@@ -15,4 +15,6 @@ router.post('/process/:filename', processVideo);
 //GET /process/{jobId}/status
 router.get('/process/:jobId/status', getStatus);
 
+//EXTRA GET /api/results
+router.get('/api/results', getResults);
 export default router;

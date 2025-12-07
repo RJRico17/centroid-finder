@@ -20,7 +20,7 @@ RUN npm install ffmpeg
 COPY server ./
 
 # witht he pwoer of friendship bring it all together
-FROM eclipse-temurin:23-jdk AS runtime
+FROM eclipse-temurin:17-jdk AS runtime
 
 RUN apt-get update && apt-get install -y \
     ffmpeg \

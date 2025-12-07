@@ -5,6 +5,7 @@ import cors from "cors";
 import path from 'path';
 
 const VIDEO_DIR = path.join(process.cwd(), 'videos');
+const OUTPUT_DIR = path.join(process.cwd(), 'results')
 
 const app = express();
 const PORT = 3000;
@@ -20,6 +21,7 @@ app.use('/videos', express.static(VIDEO_DIR, {
     }
   }
 }));
+app.use('/results', express.static(OUTPUT_DIR));
 app.use(express.json());
 app.use(cors());
 
