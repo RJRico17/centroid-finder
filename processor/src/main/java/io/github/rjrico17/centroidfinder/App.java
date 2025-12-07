@@ -26,7 +26,7 @@ public class App {
 
                 if (groups.isEmpty()) {
                     // writer class lets us write character streams like shown below
-                    writer.printf("%.3f,%d,%d%n", time, -1 -1);
+                    writer.printf("%.3f,%d,%d%n", time, -1, -1);
                 } else {
                     Group largest = groups.get(0);
                     writer.printf("%.3f,%d,%d%n", time, largest.centroid().x(), largest.centroid().y());

@@ -22,16 +22,18 @@ COPY server ./
 # witht he pwoer of friendship bring it all together
 FROM eclipse-temurin:23-jdk-alpine
 
-RUN apk add --no-cache ffmpeg nodejs npm
+RUN apk update && apk add --no-cache ffmpeg nodejs npm
+
 
 WORKDIR /app
+RUN mkdir -p /app/processor/target
 
 #jar
-COPY --from=build /app/target/*.jar app.jar
+COPY ./processor/target/centroid-finder-1.0-SNAPSHOT.jar /app/processor/target/app.jar
 #node
 COPY --from=node-build /server /server
 
 EXPOSE 8080 3000
 
 #start that damn thing up
-CMD sh -c "java -jar app.jar & cd /server && node server.js"
+CMD sh -c "java -jar /app/processor/target/app.jar & cd /server && node server.js"

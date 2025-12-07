@@ -31,7 +31,11 @@
       <artifactId>javacv-platform</artifactId>
       <version>1.5.10</version>
     </dependency>
-
+    <dependency>
+      <groupId>org.bytedeco</groupId>
+      <artifactId>javacv</artifactId>
+      <version>1.5.10</version>
+    </dependency>
     <dependency>
       <groupId>org.boofcv</groupId>
       <artifactId>boofcv-ffmpeg</artifactId>
@@ -60,30 +64,22 @@
     <!-- Creates fat JAR with all dependencies so Docker can run it -->
 
         <plugin>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <version>3.6.0</version>
-        <configuration>
-            <archive>
-                <manifest>
-                    <mainClass>io.github.rjrico17.centroidfinder.App</mainClass>
-                </manifest>
-            </archive>
-            <descriptorRefs>
-                <descriptorRef>jar-with-dependencies</descriptorRef>
-            </descriptorRefs>
-            <finalName>videoprocessor</finalName>
-            <appendAssemblyId>false</appendAssemblyId>  
-
-        </configuration>
-        <executions>
-            <execution>
-                <id>make-assembly</id>
-                <phase>package</phase>
-                <goals>
-                    <goal>single</goal>
-                </goals>
-            </execution>
-        </executions>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-shade-plugin</artifactId>
+      <version>3.2.4</version>
+      <executions>
+        <execution>
+          <phase>package</phase>
+          <goals><goal>shade</goal></goals>
+          <configuration>
+            <transformers>
+              <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                <mainClass>io.github.rjrico17.centroidfinder.App</mainClass>
+              </transformer>
+            </transformers>
+          </configuration>
+        </execution>
+      </executions>
     </plugin>
     
       <plugin>

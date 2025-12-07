@@ -12,7 +12,7 @@ const { ROUTE } = process.env;
 const VIDEO_DIR = '/videos'
 const OUTPUT_DIR = '/results';
 
-const JAR_PATH = path.join(process.cwd(), 'processor', 'target', 'centroid-finder-1.0-SNAPSHOT.jar');
+const JAR_PATH = '/app/processor/target/app.jar';
 
 const jobs = {};
 
@@ -46,7 +46,9 @@ export const getThumbnail = (req,res) => {
 
 // Starts new background job to process video with Java JAR
 export const processVideo = (req,res) => {
-    const { filename } = req.params;
+    const filename = req.params.filename;
+    const targetColor = req.query.targetColor;
+    const threshold = req.query.threshold;
     const inputPath = path.join(VIDEO_DIR, filename);
 
     // validate the file exists before processing
@@ -67,10 +69,13 @@ export const processVideo = (req,res) => {
     console.log(`Job started @ ${jobId}`)
 
     // Launch the JAR as a detached process
-    const child = spawn('java', ['-jar', JAR_PATH, inputPath, outputPath], {
+    const child = spawn('java', ['-jar', JAR_PATH, inputPath, outputPath, targetColor, threshold], {
         detached: true,
-        stdio: 'ignore'
+        stdio: ['ignore', 'pipe', 'pipe']
     });
+
+    child.stdout.on('data', (data) => console.log(data.toString()));
+    child.stderr.on('data', (data) => console.error(data.toString()));
 
     // Save job metadata
     jobs[jobId] = { status: 'running', outputPath };
