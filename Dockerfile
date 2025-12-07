@@ -1,5 +1,5 @@
 # java part
-FROM maven:3.9.3-eclipse-temurin-17 AS build
+FROM maven:3.9.2-eclipse-temurin-17 AS build
 
 ENV VIDEO_DIRECTORY=/videos
 ENV RESULT_DIRECTORY=/results
@@ -20,9 +20,13 @@ RUN npm install ffmpeg
 COPY server ./
 
 # witht he pwoer of friendship bring it all together
-FROM eclipse-temurin:23-jdk-alpine
+FROM eclipse-temurin:23-jdk AS runtime
 
-RUN apk update && apk add --no-cache ffmpeg nodejs npm
+RUN apt-get update && apt-get install -y \
+    ffmpeg \
+    nodejs \
+    npm \
+    && rm -rf /var/lib/apt/lists/*
 
 
 WORKDIR /app

@@ -65,7 +65,7 @@ export const processVideo = (req,res) => {
     }
 
     const jobId = uuidv4();
-    const outputPath = path.join(OUTPUT_DIR, `${jobId}_${filename}`);
+    const outputPath = path.join(OUTPUT_DIR, `${jobId}_${filename}_file.csv`);
     console.log(`Job started @ ${jobId}`)
 
     // Launch the JAR as a detached process
