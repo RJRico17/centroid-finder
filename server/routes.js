@@ -10,7 +10,7 @@ router.get('/api/videos', getVideos);
 router.get('/thumbnail/:filename', getThumbnail);
 
 //POST /process/{filename}
-router.get('/process/:filename', processVideo);
+router.post('/process/:filename', processVideo);
 
 //GET /process/{jobId}/status
 router.get('/process/:jobId/status', getStatus);
