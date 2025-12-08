@@ -2,7 +2,8 @@
 FROM maven:3.9.2-eclipse-temurin-17 AS build
 
 ENV VIDEO_DIRECTORY=/videos
-ENV RESULT_DIRECTORY=/results
+ENV OUTPUT_DIRECTORY=/results
+ENV JAR_PATH=/app/processor/target/app.jar
 
 WORKDIR /app
 COPY processor/pom.xml .
@@ -33,7 +34,7 @@ WORKDIR /app
 RUN mkdir -p /app/processor/target
 
 #jar
-COPY ./processor/target/centroid-finder-1.0-SNAPSHOT.jar /app/processor/target/app.jar
+COPY --from=build /app/target/centroid-finder-1.0-SNAPSHOT.jar /app/processor/target/app.jar
 #node
 COPY --from=node-build /server /server
 
