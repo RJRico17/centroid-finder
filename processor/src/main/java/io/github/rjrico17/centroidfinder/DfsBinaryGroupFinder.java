@@ -2,6 +2,8 @@ package io.github.rjrico17.centroidfinder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Deque;
+import java.util.ArrayDeque;
 
 public class DfsBinaryGroupFinder implements BinaryGroupFinder {
    /**
@@ -42,7 +44,7 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
     public List<Group> findConnectedGroups(int[][] image, boolean[][] seen, List<Group> groups) {
         for (int r = 0; r < image.length; r++) {
             if (image[r] == null) throw new NullPointerException();
-            for (int c = 0; c < image[0].length; c++) {
+            for (int c = 0; c < image[r].length; c++) {
                 if (image[r][c] != 0 && image[r][c] != 1) throw new IllegalArgumentException("Contains non binary values");
                 if (image[r][c]==1 && !seen[r][c]) {
                     int xsum = 0;
@@ -58,25 +60,54 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
         }
         return groups;
     }
-    
+
     public static List<int[]> dfs(int[][] image, boolean[][] seen, int r, int c) {
         List<int[]> pixels = new ArrayList<>();
         return dfs(image, seen, pixels, r, c);
     }
-    public static List<int[]> dfs(int[][] image, boolean[][] seen, List<int[]> pixels, int r, int c) {
-        int[][] directions = {{-1,0},{1,0},{0,-1},{0,1}};
-        if (seen[r][c]) return pixels;
+
+    public static List < int[] > dfs(int[][] image, boolean[][] seen, List < int[] > pixels, int r, int c) {
+        int[][] dirs = {
+            {
+                -1, 0
+            },
+            {
+                1,
+                0
+            },
+            {
+                0,
+                -1
+            },
+            {
+                0,
+                1
+            }
+        };
+        Deque < int[] > stack = new ArrayDeque < > ();
+        stack.push(new int[] {
+            r,
+            c
+        });
         seen[r][c] = true;
-        pixels.add(new int[]{c,r});
-        for (int[] dir : directions) {
-            //ACCIDENTALLY DID THIS HUMAN CODE WITH AN AI COMMIT i talked to you about hit tho auberon
-            //10.14.2025 https://github.com/grc-cohort-21/centroid-finder/commit/8b71eec2996137ad6581977cd7b2218b52a53e40
-            if (r+dir[0]<image.length&&
-                r+dir[0]>=0&&
-                c+dir[1]<image[0].length&&
-                c+dir[1]>=0&&
-                (!seen[r + dir[0]][c + dir[1]]) &&
-                image[r + dir[0]][c + dir[1]] == 1) dfs(image, seen, pixels, r+dir[0], c+dir[1]);
+        while (!stack.isEmpty()) {
+            int[] cur = stack.pop();
+            int cr = cur[0], cc = cur[1];
+            pixels.add(new int[] {
+                cc,
+                cr
+            });
+            for (int[] d: dirs) {
+                int nr = cr + d[0], nc = cc + d[1];
+                if (nr >= 0 && nr < image.length && nc >= 0 && nc < image[0].length &&
+                    !seen[nr][nc] && image[nr][nc] == 1) {
+                    seen[nr][nc] = true;
+                    stack.push(new int[] {
+                        nr,
+                        nc
+                    });
+                }
+            }
         }
         return pixels;
     }

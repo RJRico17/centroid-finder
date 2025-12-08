@@ -73,7 +73,7 @@ If you want to, you can make a new branch to start experimenting. See if you can
 Running with Docker:
 
 Build the image: 
-docker build -t centroid 
+docker build -t centroid .
 
 Run the application: 
 docker run -p 8080:8080 centroid
