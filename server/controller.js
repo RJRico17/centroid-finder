@@ -9,10 +9,10 @@ dotenv.config()
 const { ROUTE } = process.env;
 
 // const VIDEO_DIR = path.join(process.cwd(), 'server', 'videos');
-const VIDEO_DIR = process.env.VIDEO_DIRECTORY || path.join(process.cwd(),'videos');
-const OUTPUT_DIR = process.env.OUTPUT_DIRECTORY || path.join(process.cwd(), 'results');
+const VIDEO_DIR = process.env.VIDEO_DIRECTORY || '/videos';
+const OUTPUT_DIR = process.env.OUTPUT_DIRECTORY || '/results';
 
-const JAR_PATH = process.env.JAR_PATH || path.join(process.cwd(), '..', 'processor', 'target', 'centroid-finder-1.0-SNAPSHOT.jar');
+const JAR_PATH = process.env.JAR_PATH || '/app/processor/target/app.jar';
 
 const jobs = {};
 
