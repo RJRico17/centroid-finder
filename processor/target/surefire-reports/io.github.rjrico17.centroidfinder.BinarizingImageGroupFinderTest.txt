@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: io.github.rjrico17.centroidfinder.BinarizingImageGroupFinderTest
--------------------------------------------------------------------------------
-Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.208 s -- in io.github.rjrico17.centroidfinder.BinarizingImageGroupFinderTest

@@ -4,8 +4,8 @@ import salamanderRouter from './routes.js';
 import cors from "cors";
 import path from 'path';
 
-const VIDEO_DIR = path.join(process.cwd(), 'videos');
-const OUTPUT_DIR = path.join(process.cwd(), 'results')
+const VIDEO_DIR = process.env.VIDEO_DIRECTORY || path.join(process.cwd(), 'videos');
+const OUTPUT_DIR = process.env.OUTPUT_DIRECTORY || path.join(process.cwd(), 'results')
 
 const app = express();
 const PORT = 3000;
