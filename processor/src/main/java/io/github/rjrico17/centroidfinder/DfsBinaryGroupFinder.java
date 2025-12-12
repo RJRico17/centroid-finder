@@ -66,46 +66,35 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
         return dfs(image, seen, pixels, r, c);
     }
 
-    public static List < int[] > dfs(int[][] image, boolean[][] seen, List < int[] > pixels, int r, int c) {
-        int[][] dirs = {
-            {
-                -1, 0
-            },
-            {
-                1,
-                0
-            },
-            {
-                0,
-                -1
-            },
-            {
-                0,
-                1
-            }
-        };
-        Deque < int[] > stack = new ArrayDeque < > ();
-        stack.push(new int[] {
-            r,
-            c
-        });
+
+    private static final int[][] direction = {
+        {-1, 0}, // up
+        { 1, 0}, // down
+        { 0,-1}, // left
+        { 0, 1}  // right
+    };
+
+    public static List < int[] > dfs(int[][] image, boolean[][] seen, List <int[]> pixels, int r, int c) {
+        Deque<int[]> stack = new ArrayDeque<>();
+        stack.push(new int[] {r,c});
         seen[r][c] = true;
+
         while (!stack.isEmpty()) {
-            int[] cur = stack.pop();
-            int cr = cur[0], cc = cur[1];
-            pixels.add(new int[] {
-                cc,
-                cr
-            });
-            for (int[] d: dirs) {
-                int nr = cr + d[0], nc = cc + d[1];
-                if (nr >= 0 && nr < image.length && nc >= 0 && nc < image[0].length &&
+            int[] current = stack.pop();
+            int row = current[0];
+            int col = current[1];
+
+            // store them as (x,y) = (col, row)
+            pixels.add(new int[]{col,row});
+
+            for (int[] d: direction) {
+                int nr = row + d[0];
+                int nc = col + d[1];
+                if (nr >= 0 && nr < image.length && 
+                    nc >= 0 && nc < image[0].length &&
                     !seen[nr][nc] && image[nr][nc] == 1) {
                     seen[nr][nc] = true;
-                    stack.push(new int[] {
-                        nr,
-                        nc
-                    });
+                    stack.push(new int[] {nr,nc});
                 }
             }
         }
